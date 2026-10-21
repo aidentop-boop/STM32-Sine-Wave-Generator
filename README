@@ -1,46 +1,49 @@
+STM32 Programmable Sine Wave Generator
 
-This directory is intended for project specific (private) libraries.
-PlatformIO will compile them to static libraries and link into the executable file.
+Project Overview
+Developed a programmable sine-wave generator using an STM32 NUCLEO-F446ZE microcontroller
+as part of the CPEG222 Embedded Systems course at the University of Delaware.
+The system uses embedded C programming and STM32 hardware peripherals to generate a sine-wave
+output with an adjustable frequency ranging from 100 Hz to 2,000 Hz.
 
-The source code of each library should be placed in a separate directory
-("lib/your_library_name/[Code]").
+Technologies Used:
+Microcontroller: STM32 NUCLEO-F446ZE
+Programming Language: Embedded C
+Development Environment: VS Code, PlatformIO
+Hardware Peripherals: ADC, DAC, DMA, TIM5, TIM6, GPIO
+Display: Four-digit seven-segment display
 
-For example, see the structure of the following example libraries `Foo` and `Bar`:
+Key Features:
+Adjustable sine-wave frequency from 100 Hz to 2,000 Hz
+Potentiometer-controlled frequency selection using a 12-bit ADC
+DAC and DMA integration for waveform generation
+Timer-controlled sine-wave output
+Real-time frequency display on a four-digit seven-segment display
+Push-button control for enabling and disabling the amplifier
 
-|--lib
-|  |
-|  |--Bar
-|  |  |--docs
-|  |  |--examples
-|  |  |--src
-|  |     |- Bar.c
-|  |     |- Bar.h
-|  |  |- library.json (optional. for custom build options, etc) https://docs.platformio.org/page/librarymanager/config.html
-|  |
-|  |--Foo
-|  |  |- Foo.c
-|  |  |- Foo.h
-|  |
-|  |- README --> THIS FILE
-|
-|- platformio.ini
-|--src
-   |- main.c
+How It Works:
+1. Frequency Control
 
-Example contents of `src/main.c` using Foo and Bar:
-```
-#include <Foo.h>
-#include <Bar.h>
+The potentioreter provides an analog voltage that is converted into a digital value using
+the STM32's 12-bit ADC.
+The ADC reading is mapped to a frequency between 100 Hz and 2,000 Hz.
 
-int main (void)
-{
-  ...
-}
+2. Waveform Generation
+A sine-wave lookup table contains sampled values of a sine function.
+DMA transfers these samples to the DAC, while TIM6 controls the sample update rate
+to produce a continuous periodic waveform.
+3. Frequency Display
+The selected frequency is displayed on a four-digit seven-segment display.
+TIM5 periodically refreshes the display using multiplexing, allowing the four digits to appear illuminated simultaneously.
 
-```
+4. User Controls
+The potentiometer adjusts the output frequency, while a push button controls the amplifier.
+Engineering Concepts Applied
+Register-level microcontroller programming
+Analog-to-digital and digital-to-analog conversion
+Direct Memory Access (DMA)
+Hardware timer configuration
+Embedded system interrupts
+Seven-segment display multiplexing
+Digital signal generation
 
-The PlatformIO Library Dependency Finder will find automatically dependent
-libraries by scanning project source files.
-
-More information about PlatformIO Library Dependency Finder
-- https://docs.platformio.org/page/librarymanager/ldf.html
